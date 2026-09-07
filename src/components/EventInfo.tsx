@@ -6,7 +6,8 @@ import { Calendar, MapPin, Gift, Shirt, Phone, Copy, Check, ExternalLink } from 
 export default function EventInfo() {
   const [copiedLocation, setCopiedLocation] = useState(false);
 
-  const eventLocation = "Salão Me Diversões";
+  const eventLocation = "Salão Alê diversões";
+  const mapsUrl = "https://share.google/ik4lL20T2KAOh9V59";
   
   // Link para Google Agenda
   const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Chá Revelação: Jade ou Benício?")}&dates=20261010T170000Z/20261010T220000Z&details=${encodeURIComponent("Celebração do Chá Revelação de Jade ou Benício! Traje sugerido: Branco. Fraldas M/G/GG Huggies, Pampers ou Babysec.")}&location=${encodeURIComponent(eventLocation)}`;
@@ -130,7 +131,7 @@ export default function EventInfo() {
 
           <div style={{ display: 'flex', gap: '0.5rem', width: '100%', marginTop: 'auto' }}>
             <a 
-              href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(eventLocation)}`} 
+              href={mapsUrl} 
               target="_blank" 
               rel="noopener noreferrer" 
               className="btn btn-secondary"

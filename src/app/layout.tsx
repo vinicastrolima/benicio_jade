@@ -35,7 +35,7 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Chá Revelação: Jade ou Benício? • Confirmação de Presença",
-  description: "10 de Outubro às 14h • Salão Me Diversões. Confirme sua presença e dê seu palpite no bolão da Jade ou Benício!",
+  description: "10 de Outubro às 14h • Salão Alê diversões. Confirme sua presença e dê seu palpite no bolão da Jade ou Benício!",
   keywords: ["Chá Revelação", "Jade ou Benício", "Confirmação de Presença", "RSVP", "Bebê"],
   authors: [{ name: "Mamãe e Papai" }],
   openGraph: {

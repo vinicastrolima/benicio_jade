@@ -191,7 +191,7 @@ export default function AdminDashboard({ initialData, onLogout }: AdminDashboard
               )}
             </div>
             <p style={{ fontSize: '0.88rem', color: 'var(--text-secondary)', marginTop: '0.2rem' }}>
-              Chá Revelação: Jade ou Benício • 10 de Outubro às 14h • Salão Me Diversões
+              Chá Revelação: Jade ou Benício • 10 de Outubro às 14h • Salão Alê diversões
             </p>
           </div>
 
