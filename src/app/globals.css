@@ -1,1 +1,401 @@
-@import "tailwindcss";
+/* ==============================================================================
+   CHÁ REVELAÇÃO: JADE OU BENÍCIO - DESIGN SYSTEM & GLOBAL CSS
+   Estética: Aquarela delicada, rústico chic, tons de terracota/rosa e azul jeans
+   ============================================================================== */
+
+:root {
+  /* Paleta Benício (Azul Jeans / Denim Suave) */
+  --boy-primary: #3d6a89;
+  --boy-hover: #2f546f;
+  --boy-light: #5d89a9;
+  --boy-soft: #edf4f9;
+  --boy-border: #b8d4e7;
+  --boy-glow: rgba(61, 106, 137, 0.25);
+
+  /* Paleta Jade (Rosa Terracota / Salmão Vintage) */
+  --girl-primary: #cb6b5c;
+  --girl-hover: #b05749;
+  --girl-light: #df7f70;
+  --girl-soft: #fcf1ef;
+  --girl-border: #f4c7c0;
+  --girl-glow: rgba(203, 107, 92, 0.25);
+
+  /* Neutros Quentes & Fundo Aquarela */
+  --bg-parchment: #fdfbf7;
+  --bg-parchment-subtle: #f6f1e8;
+  --bg-card: rgba(255, 255, 255, 0.92);
+  --bg-card-glass: rgba(255, 255, 255, 0.78);
+  --border-soft: #e7ded2;
+  --border-card: rgba(206, 191, 175, 0.55);
+
+  /* Tipografia & Contrastes */
+  --text-primary: #332723;
+  --text-secondary: #6e5e57;
+  --text-muted: #95847d;
+
+  /* Cores de Acento */
+  --gold-accent: #bfa15f;
+  --gold-light: #f7f1e1;
+  --leaf-green: #607b66;
+  --leaf-light: #eef4f0;
+  --danger: #d94848;
+  --success: #3c825a;
+
+  /* Sombras Suaves */
+  --shadow-sm: 0 2px 8px rgba(90, 70, 60, 0.05);
+  --shadow-md: 0 8px 24px rgba(90, 70, 60, 0.08);
+  --shadow-lg: 0 16px 40px rgba(90, 70, 60, 0.12);
+  --shadow-xl: 0 24px 60px rgba(90, 70, 60, 0.16);
+
+  /* Transições Suaves */
+  --transition-fast: 0.18s ease;
+  --transition-normal: 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  background-color: var(--bg-parchment);
+  color: var(--text-primary);
+  font-family: var(--font-sans), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Fundo texturizado com lavagem de aquarela sutil */
+body {
+  background-image: 
+    radial-gradient(at 10% 15%, rgba(203, 107, 92, 0.07) 0px, transparent 50%),
+    radial-gradient(at 90% 20%, rgba(61, 106, 137, 0.08) 0px, transparent 50%),
+    radial-gradient(at 50% 55%, rgba(191, 161, 95, 0.05) 0px, transparent 65%),
+    radial-gradient(at 20% 85%, rgba(61, 106, 137, 0.06) 0px, transparent 50%),
+    radial-gradient(at 80% 90%, rgba(203, 107, 92, 0.07) 0px, transparent 50%);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Tipografias */
+h1, h2, h3, .font-serif {
+  font-family: var(--font-serif), "Cormorant Garamond", Georgia, serif;
+}
+
+.font-script {
+  font-family: var(--font-script), "Great Vibes", cursive;
+}
+
+/* Container responsivo */
+.container {
+  width: 100%;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+.container-wide {
+  width: 100%;
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* Cartões com efeito papel artesanal e glassmorphism */
+.glass-card {
+  background: var(--bg-card);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid var(--border-card);
+  border-radius: 20px;
+  box-shadow: var(--shadow-md);
+  transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+}
+
+.glass-card-subtle {
+  background: var(--bg-card-glass);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(230, 220, 208, 0.7);
+  border-radius: 16px;
+}
+
+/* Botões Estilizados */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 1.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 9999px;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  text-decoration: none;
+  font-family: inherit;
+  line-height: 1.2;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary-jade {
+  background: linear-gradient(135deg, var(--girl-primary), var(--girl-hover));
+  color: #ffffff;
+  box-shadow: 0 4px 15px var(--girl-glow);
+}
+.btn-primary-jade:hover {
+  background: linear-gradient(135deg, var(--girl-light), var(--girl-primary));
+  box-shadow: 0 6px 20px rgba(203, 107, 92, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-primary-benicio {
+  background: linear-gradient(135deg, var(--boy-primary), var(--boy-hover));
+  color: #ffffff;
+  box-shadow: 0 4px 15px var(--boy-glow);
+}
+.btn-primary-benicio:hover {
+  background: linear-gradient(135deg, var(--boy-light), var(--boy-primary));
+  box-shadow: 0 6px 20px rgba(61, 106, 137, 0.35);
+  transform: translateY(-1px);
+}
+
+.btn-secondary {
+  background: #ffffff;
+  color: var(--text-primary);
+  border: 1px solid var(--border-soft);
+  box-shadow: var(--shadow-sm);
+}
+.btn-secondary:hover {
+  background: var(--bg-parchment-subtle);
+  border-color: #d8cebf;
+  transform: translateY(-1px);
+}
+
+.btn-whatsapp {
+  background: #25d366;
+  color: #ffffff;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.28);
+}
+.btn-whatsapp:hover {
+  background: #20bd5a;
+  transform: translateY(-1px);
+}
+
+/* Inputs e Formulários */
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin-bottom: 1.25rem;
+  text-align: left;
+}
+
+.form-label {
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.form-input, .form-textarea, .form-select {
+  width: 100%;
+  padding: 0.85rem 1.1rem;
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--text-primary);
+  background-color: #ffffff;
+  border: 1.5px solid var(--border-soft);
+  border-radius: 12px;
+  outline: none;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+.form-input:focus, .form-textarea:focus, .form-select:focus {
+  border-color: var(--boy-primary);
+  box-shadow: 0 0 0 3.5px var(--boy-glow);
+}
+
+.form-textarea {
+  min-height: 90px;
+  resize: vertical;
+}
+
+/* Badges e Pílulas */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-jade {
+  background-color: var(--girl-soft);
+  color: var(--girl-primary);
+  border: 1px solid var(--girl-border);
+}
+
+.badge-benicio {
+  background-color: var(--boy-soft);
+  color: var(--boy-primary);
+  border: 1px solid var(--boy-border);
+}
+
+.badge-gold {
+  background-color: var(--gold-light);
+  color: #8c6a23;
+  border: 1px solid #ebd7a3;
+}
+
+.badge-green {
+  background-color: var(--leaf-light);
+  color: var(--leaf-green);
+  border: 1px solid #cce0cf;
+}
+
+/* Divisores ornamentais */
+.ornament-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  margin: 2rem 0;
+  color: var(--gold-accent);
+}
+.ornament-divider::before,
+.ornament-divider::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border-soft), transparent);
+}
+
+/* Animações Flutuantes */
+@keyframes floatGentle {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  50% {
+    transform: translateY(-6px) rotate(0.8deg);
+  }
+}
+
+.animate-float {
+  animation: floatGentle 4s ease-in-out infinite;
+}
+
+@keyframes pulseSoft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.75;
+  }
+}
+
+.animate-pulse-soft {
+  animation: pulseSoft 2.5s ease-in-out infinite;
+}
+
+/* ==============================================================================
+   REGRAS DE IMPRESSÃO PROFISSIONAL (@media print)
+   Garante que a lista de convidados saia perfeita no papel/PDF para a portaria
+   ============================================================================== */
+@media print {
+  /* Reset de cores e sombras para economia de tinta e nitidez */
+  html, body {
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-size: 11pt !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  body {
+    background-image: none !important;
+  }
+
+  /* Ocultar elementos de tela interativos */
+  .no-print,
+  .print-hide,
+  nav,
+  button,
+  .btn,
+  .admin-header-actions,
+  .admin-filters,
+  .admin-pin-modal,
+  footer {
+    display: none !important;
+  }
+
+  /* Mostrar cabeçalho e tabela de impressão */
+  .print-only {
+    display: block !important;
+  }
+
+  .print-container {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 !important;
+    padding: 10mm !important;
+  }
+
+  .print-table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+    margin-top: 15px !important;
+    font-size: 10pt !important;
+  }
+
+  .print-table th {
+    background-color: #f0f0f0 !important;
+    color: #000000 !important;
+    border: 1px solid #333333 !important;
+    padding: 6px 8px !important;
+    text-align: left !important;
+    font-weight: bold !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-table td {
+    border: 1px solid #cccccc !important;
+    padding: 6px 8px !important;
+    page-break-inside: avoid !important;
+  }
+
+  .print-table tr:nth-child(even) td {
+    background-color: #fafafa !important;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .print-checkbox {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    border: 1.5px solid #000000;
+    margin: 0 auto;
+    border-radius: 2px;
+  }
+
+  .print-summary-box {
+    border: 1.5px solid #333333 !important;
+    padding: 10px !important;
+    margin-bottom: 15px !important;
+    border-radius: 4px !important;
+    page-break-inside: avoid !important;
+  }
+}
