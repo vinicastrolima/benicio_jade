@@ -7,7 +7,7 @@ Aplicação web completa, moderna e responsiva para confirmação de presença (
 ## ✨ Funcionalidades
 
 - **📱 Experiência Mobile & Desktop Imersiva:** Totalmente adaptado para smartphones e telas grandes, com toques suaves, micro-animações e paleta harmoniosa (azul jeans denim do Benício e terracota suave da Jade).
-- **💌 Apresentação Visual do Convite:** Destaque para a aquarela original dos vestidinhos pendurados no galho botânico e contagem regressiva em tempo real até 10 de Outubro às 14h.
+- **💌 Apresentação Visual do Convite:** Destaque para a aquarela original dos vestidinhos pendurados no galho botânico e contagem regressiva em tempo real até 10 de Outubro às 13h30.
 - **🗳️ Bolão Interativo dos Convidados:** Termômetro dinâmico em tempo real mostrando a porcentagem da torcida: **Time Jade** vs **Time Benício**.
 - **📅 Informações da Festa & Ações Rápidas:**
   - Botão com 1 clique para "Adicionar ao Google Agenda"

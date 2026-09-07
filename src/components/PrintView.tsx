@@ -85,7 +85,7 @@ export default function PrintView({ convidados, onBack }: PrintViewProps) {
             Lista Oficial de Entrada & Portaria ({filterMode === 'apenas_confirmados' ? 'Confirmados' : 'Lista Completa'})
           </h2>
           <div style={{ fontSize: '10pt', color: '#666', marginTop: '4px' }}>
-            Data: 10 de Outubro • Horário: 14h00 • Local: Salão Alê diversões • Traje: Branco
+            Data: 10 de Outubro • Horário: 13h30 • Local: Salão Alê diversões • Traje: Branco
           </div>
         </div>
 

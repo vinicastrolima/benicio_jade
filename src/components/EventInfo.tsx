@@ -9,8 +9,8 @@ export default function EventInfo() {
   const eventLocation = "Salão Alê diversões";
   const mapsUrl = "https://share.google/ik4lL20T2KAOh9V59";
   
-  // Link para Google Agenda
-  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Chá Revelação: Jade ou Benício?")}&dates=20261010T170000Z/20261010T220000Z&details=${encodeURIComponent("Celebração do Chá Revelação de Jade ou Benício! Traje sugerido: Branco. Fraldas M/G/GG Huggies, Pampers ou Babysec.")}&location=${encodeURIComponent(eventLocation)}`;
+  // Link para Google Agenda (13:30 BRT = 16:30 UTC)
+  const googleCalendarUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${encodeURIComponent("Chá Revelação: Jade ou Benício?")}&dates=20261010T163000Z/20261010T213000Z&details=${encodeURIComponent("Celebração do Chá Revelação de Jade ou Benício! Traje sugerido: Branco. Fraldas M/G/GG Huggies, Pampers ou Babysec.")}&location=${encodeURIComponent(eventLocation)}`;
 
   const copyToClipboard = () => {
     navigator.clipboard.writeText(eventLocation);
@@ -78,7 +78,7 @@ export default function EventInfo() {
             10 de Outubro
           </p>
           <p style={{ fontSize: '0.95rem', color: 'var(--text-secondary)', marginBottom: '1.2rem' }}>
-            Às 14h00 em ponto
+            Às 13h30 em ponto
           </p>
 
           <a 

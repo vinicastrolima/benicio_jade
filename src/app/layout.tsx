@@ -35,12 +35,12 @@ const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: "Chá Revelação: Jade ou Benício? • Confirmação de Presença",
-  description: "10 de Outubro às 14h • Salão Alê diversões. Confirme sua presença e dê seu palpite no bolão da Jade ou Benício!",
+  description: "10 de Outubro às 13h30 • Salão Alê diversões. Confirme sua presença e dê seu palpite no bolão da Jade ou Benício!",
   keywords: ["Chá Revelação", "Jade ou Benício", "Confirmação de Presença", "RSVP", "Bebê"],
   authors: [{ name: "Mamãe e Papai" }],
   openGraph: {
     siteName: "Chá Revelação: Jade ou Benício?",
-    title: "Chá Revelação: Jade ou Benício? • 10 de Outubro às 14h",
+    title: "Chá Revelação: Jade ou Benício? • 10 de Outubro às 13h30",
     description: "Mamãe e Papai estão muito felizes e ansiosos! Confirme sua presença e participe do bolão.",
     images: [
       {
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Chá Revelação: Jade ou Benício? • 10 de Outubro às 14h",
+    title: "Chá Revelação: Jade ou Benício? • 10 de Outubro às 13h30",
     description: "Mamãe e Papai estão muito felizes e ansiosos! Confirme sua presença e participe do bolão.",
     images: ["/convite.jpg"],
   },

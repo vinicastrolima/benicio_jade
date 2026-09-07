@@ -13,8 +13,8 @@ export default function HeaderHero() {
   }>({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    // Data do evento: 10 de Outubro de 2026 às 14:00
-    const targetDate = new Date('2026-10-10T14:00:00-03:00').getTime();
+    // Data do evento: 10 de Outubro de 2026 às 13:30
+    const targetDate = new Date('2026-10-10T13:30:00-03:00').getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();
