@@ -188,6 +188,37 @@ export async function addConvidadoManual(nome: string, limite: number): Promise<
   return newGuest;
 }
 
+export async function updateConvidadoCompleto(
+  id: string, 
+  data: Partial<PreRegisteredGuest>
+): Promise<boolean> {
+  const cleanAcompanhantes = (data.acompanhantes_nomes || []).filter(n => n.trim().length > 0);
+  const total = data.status === 'confirmado' ? 1 + cleanAcompanhantes.length : 0;
+
+  const updateFields: Partial<PreRegisteredGuest> = {
+    ...data,
+    acompanhantes_nomes: cleanAcompanhantes,
+    total_confirmados: total,
+  };
+
+  if (supabase) {
+    try {
+      const { error } = await supabase
+        .from('convidados')
+        .update(updateFields)
+        .eq('id', id);
+      if (error) throw error;
+    } catch (e) {
+      console.error('Erro ao atualizar convidado no Supabase:', e);
+    }
+  }
+
+  const current = getLocalConvidados();
+  const updated = current.map(item => item.id === id ? { ...item, ...updateFields } : item);
+  saveLocalConvidados(updated);
+  return true;
+}
+
 export async function deleteConvidado(id: string): Promise<boolean> {
   if (supabase) {
     try {

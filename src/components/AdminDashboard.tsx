@@ -7,6 +7,7 @@ import {
   deleteConvidado, 
   resetConfirmacao,
   addConvidadoManual,
+  updateConvidadoCompleto,
   isSupabaseConfigured 
 } from '@/lib/supabaseClient';
 import PrintView from './PrintView';
@@ -28,6 +29,8 @@ import {
   Trophy,
   ExternalLink,
   Send,
+  Pencil,
+  UserPlus,
   X
 } from 'lucide-react';
 
@@ -49,6 +52,65 @@ export default function AdminDashboard({ initialData, onLogout }: AdminDashboard
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [newNome, setNewNome] = useState('');
   const [newLimite, setNewLimite] = useState(1);
+
+  // Modal de edição de convidado e acompanhantes
+  const [editingGuest, setEditingGuest] = useState<PreRegisteredGuest | null>(null);
+  const [editNome, setEditNome] = useState('');
+  const [editLimite, setEditLimite] = useState(0);
+  const [editStatus, setEditStatus] = useState<'pendente' | 'confirmado' | 'recusado'>('pendente');
+  const [editAcompanhantes, setEditAcompanhantes] = useState<string[]>([]);
+  const [editPalpite, setEditPalpite] = useState<'jade' | 'benicio' | 'surpresa'>('jade');
+
+  const handleStartEdit = (guest: PreRegisteredGuest) => {
+    setEditingGuest(guest);
+    setEditNome(guest.nome);
+    setEditLimite(guest.limite_acompanhantes);
+    setEditStatus(guest.status);
+    setEditPalpite(guest.palpite || 'jade');
+    
+    const currentList = [...(guest.acompanhantes_nomes || [])];
+    while (currentList.length < guest.limite_acompanhantes) {
+      currentList.push('');
+    }
+    setEditAcompanhantes(currentList);
+  };
+
+  const handleEditAcompanhanteChange = (index: number, val: string) => {
+    const updated = [...editAcompanhantes];
+    updated[index] = val;
+    setEditAcompanhantes(updated);
+  };
+
+  const handleAddAcompanhanteSlot = () => {
+    setEditLimite(prev => prev + 1);
+    setEditAcompanhantes(prev => [...prev, '']);
+  };
+
+  const handleRemoveAcompanhanteSlot = (index: number) => {
+    const updated = editAcompanhantes.filter((_, i) => i !== index);
+    setEditAcompanhantes(updated);
+    setEditLimite(Math.max(0, editLimite - 1));
+  };
+
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingGuest) return;
+
+    const cleanCompanions = editAcompanhantes.filter(n => n.trim().length > 0);
+    const total = editStatus === 'confirmado' ? 1 + cleanCompanions.length : 0;
+
+    await updateConvidadoCompleto(editingGuest.id, {
+      nome: editNome.trim(),
+      limite_acompanhantes: editLimite,
+      status: editStatus,
+      acompanhantes_nomes: cleanCompanions,
+      total_confirmados: total,
+      palpite: editPalpite,
+    });
+
+    setEditingGuest(null);
+    await refreshData();
+  };
 
   const refreshData = async () => {
     const updated = await getConvidados();
@@ -540,7 +602,29 @@ export default function AdminDashboard({ initialData, onLogout }: AdminDashboard
 
                       {/* Ações */}
                       <td style={{ padding: '0.9rem 1rem', textAlign: 'right' }}>
-                        <div style={{ display: 'inline-flex', gap: '0.3rem' }}>
+                        <div style={{ display: 'inline-flex', gap: '0.4rem', alignItems: 'center' }}>
+                          <button
+                            onClick={() => handleStartEdit(guest)}
+                            style={{
+                              border: '1px solid var(--border-soft)',
+                              backgroundColor: '#ffffff',
+                              color: 'var(--boy-primary)',
+                              cursor: 'pointer',
+                              padding: '0.35rem 0.6rem',
+                              borderRadius: '8px',
+                              fontSize: '0.8rem',
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              gap: '0.25rem',
+                              fontWeight: 600,
+                              boxShadow: 'var(--shadow-sm)'
+                            }}
+                            title="Editar Convidado e Acompanhantes"
+                          >
+                            <Pencil size={13} />
+                            <span>Editar</span>
+                          </button>
+
                           {guest.status !== 'pendente' && (
                             <button
                               onClick={() => handleReset(guest.id, guest.nome)}
@@ -681,6 +765,168 @@ export default function AdminDashboard({ initialData, onLogout }: AdminDashboard
                 </button>
                 <button type="submit" className="btn btn-primary-jade">
                   Cadastrar Convidado
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Modal de Edição de Convidado & Acompanhantes */}
+      {editingGuest && (
+        <div 
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(0,0,0,0.55)',
+            backdropFilter: 'blur(4px)',
+            WebkitBackdropFilter: 'blur(4px)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '1.25rem',
+            zIndex: 9999
+          }}
+        >
+          <div className="glass-card" style={{ maxWidth: '520px', width: '100%', padding: '2rem', borderRadius: '24px', maxHeight: '90vh', overflowY: 'auto' }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+              <div>
+                <h4 className="font-serif" style={{ fontSize: '1.5rem', fontWeight: 700, margin: 0 }}>
+                  Editar Convidado & Acompanhantes
+                </h4>
+                <p style={{ fontSize: '0.82rem', color: 'var(--text-muted)', margin: '0.2rem 0 0' }}>
+                  Ajuste o nome, vagas e acompanhantes nominais
+                </p>
+              </div>
+              <button onClick={() => setEditingGuest(null)} style={{ border: 'none', background: 'none', cursor: 'pointer', color: '#666' }}>
+                <X size={20} />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveEdit}>
+              <div className="form-group">
+                <label className="form-label">Nome do Convidado Principal *</label>
+                <input
+                  type="text"
+                  required
+                  className="form-input"
+                  value={editNome}
+                  onChange={e => setEditNome(e.target.value)}
+                />
+              </div>
+
+              <div className="form-group">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.3rem' }}>
+                  <label className="form-label" style={{ margin: 0 }}>
+                    Vagas para Acompanhantes ({editLimite})
+                  </label>
+                  <button
+                    type="button"
+                    onClick={handleAddAcompanhanteSlot}
+                    style={{
+                      border: 'none',
+                      background: 'none',
+                      color: 'var(--boy-primary)',
+                      fontSize: '0.82rem',
+                      fontWeight: 700,
+                      cursor: 'pointer',
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.2rem'
+                    }}
+                  >
+                    <Plus size={14} /> Adicionar Vaga (+1)
+                  </button>
+                </div>
+                <input
+                  type="number"
+                  min="0"
+                  max="15"
+                  className="form-input"
+                  value={editLimite}
+                  onChange={e => {
+                    const val = Math.max(0, Number(e.target.value));
+                    setEditLimite(val);
+                    const list = [...editAcompanhantes];
+                    while (list.length < val) list.push('');
+                    setEditAcompanhantes(list);
+                  }}
+                />
+              </div>
+
+              {/* Lista de Acompanhantes Editáveis */}
+              {editLimite > 0 && (
+                <div style={{ backgroundColor: '#fcfaf6', padding: '1rem', borderRadius: '16px', border: '1px solid var(--border-soft)', marginBottom: '1.25rem' }}>
+                  <div style={{ fontWeight: 700, fontSize: '0.88rem', marginBottom: '0.6rem', color: 'var(--text-primary)', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                    <UserPlus size={15} color="var(--boy-primary)" />
+                    Nomes dos Acompanhantes:
+                  </div>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem' }}>
+                    {Array.from({ length: editLimite }).map((_, index) => (
+                      <div key={index} style={{ display: 'flex', gap: '0.4rem', alignItems: 'center' }}>
+                        <input
+                          type="text"
+                          placeholder={`Nome do Acompanhante ${index + 1}`}
+                          className="form-input"
+                          style={{ fontSize: '0.9rem', padding: '0.6rem 0.85rem' }}
+                          value={editAcompanhantes[index] || ''}
+                          onChange={e => handleEditAcompanhanteChange(index, e.target.value)}
+                        />
+                        <button
+                          type="button"
+                          onClick={() => handleRemoveAcompanhanteSlot(index)}
+                          style={{
+                            border: '1px solid #e0c8c8',
+                            backgroundColor: '#fff',
+                            color: 'var(--danger)',
+                            padding: '0.55rem',
+                            borderRadius: '10px',
+                            cursor: 'pointer'
+                          }}
+                          title="Remover esta vaga"
+                        >
+                          <Trash2 size={14} />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.25rem' }}>
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label">Status</label>
+                  <select
+                    className="form-select"
+                    value={editStatus}
+                    onChange={e => setEditStatus(e.target.value as any)}
+                  >
+                    <option value="confirmado">Confirmado</option>
+                    <option value="pendente">Pendente</option>
+                    <option value="recusado">Não poderá ir</option>
+                  </select>
+                </div>
+
+                <div className="form-group" style={{ margin: 0 }}>
+                  <label className="form-label">Palpite</label>
+                  <select
+                    className="form-select"
+                    value={editPalpite}
+                    onChange={e => setEditPalpite(e.target.value as any)}
+                  >
+                    <option value="jade">👗 Time Jade</option>
+                    <option value="benicio">👖 Time Benício</option>
+                    <option value="surpresa">Surpresa</option>
+                  </select>
+                </div>
+              </div>
+
+              <div style={{ display: 'flex', gap: '0.75rem', justifyContent: 'flex-end', marginTop: '1.5rem' }}>
+                <button type="button" onClick={() => setEditingGuest(null)} className="btn btn-secondary">
+                  Cancelar
+                </button>
+                <button type="submit" className="btn btn-primary-jade">
+                  Salvar Alterações
                 </button>
               </div>
             </form>

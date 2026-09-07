@@ -228,12 +228,12 @@ export default function RsvpForm({ convidados, onSuccess }: RsvpFormProps) {
 
                         <div>
                           {isConfirmed ? (
-                            <span className="badge badge-green">
-                              <Check size={12} /> Confirmado
+                            <span className="badge badge-green" style={{ display: 'inline-flex', alignItems: 'center', gap: '0.3rem' }}>
+                              <Check size={12} /> Confirmado • Editar
                             </span>
                           ) : isRecused ? (
                             <span className="badge" style={{ backgroundColor: '#fde8e8', color: '#9b1c1c' }}>
-                              Não poderá ir
+                              Não vai • Alterar
                             </span>
                           ) : (
                             <span className="badge badge-gold">
@@ -311,6 +311,30 @@ export default function RsvpForm({ convidados, onSuccess }: RsvpFormProps) {
                 )}
               </div>
             </div>
+
+            {/* Banner de Edição para Convidado já Confirmado */}
+            {selectedGuest.status === 'confirmado' && (
+              <div 
+                style={{
+                  backgroundColor: '#f0f9f2',
+                  border: '1px solid #b7e4c7',
+                  borderRadius: '16px',
+                  padding: '0.9rem 1.15rem',
+                  marginBottom: '1.25rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: '0.65rem',
+                  fontSize: '0.88rem',
+                  color: '#2d6a4f',
+                  boxShadow: 'var(--shadow-sm)'
+                }}
+              >
+                <Sparkles size={20} style={{ flexShrink: 0, color: 'var(--leaf-green)' }} />
+                <div>
+                  <strong>Presença já confirmada!</strong> Você pode alterar ou adicionar os nomes dos seus acompanhantes abaixo e salvar as alterações a qualquer momento.
+                </div>
+              </div>
+            )}
 
             {/* Formulário */}
             <form onSubmit={handleSubmit}>
@@ -508,11 +532,11 @@ export default function RsvpForm({ convidados, onSuccess }: RsvpFormProps) {
                   }}
                 >
                   {loading ? (
-                    <span>Salvando confirmação...</span>
+                    <span>{selectedGuest.status === 'confirmado' ? 'Salvando alterações...' : 'Salvando confirmação...'}</span>
                   ) : (
                     <>
                       <Send size={18} />
-                      <span>Confirmar Presença</span>
+                      <span>{selectedGuest.status === 'confirmado' ? 'Atualizar Confirmação & Acompanhantes' : 'Confirmar Presença'}</span>
                     </>
                   )}
                 </button>
@@ -569,7 +593,9 @@ export default function RsvpForm({ convidados, onSuccess }: RsvpFormProps) {
             </div>
 
             <h4 className="font-serif" style={{ fontSize: '2rem', fontWeight: 700, marginBottom: '0.5rem' }}>
-              {status === 'confirmado' ? 'Presença Confirmada!' : 'Resposta Registrada!'}
+              {status === 'confirmado' 
+                ? (selectedGuest.status === 'confirmado' ? 'Confirmação e Acompanhantes Atualizados!' : 'Presença Confirmada!') 
+                : 'Resposta Registrada!'}
             </h4>
 
             <p style={{ fontSize: '1.05rem', color: 'var(--text-primary)', margin: '0 auto 1.25rem' }}>
