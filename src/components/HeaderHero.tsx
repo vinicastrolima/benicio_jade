@@ -131,7 +131,7 @@ export default function HeaderHero() {
           }}
         >
           <Image
-            src="/convite.jpg"
+            src="/convite-v2.jpg"
             alt="Convite Chá Revelação Jade ou Benício"
             fill
             sizes="(max-width: 600px) 100vw, 520px"

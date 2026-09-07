@@ -44,7 +44,7 @@ export const metadata: Metadata = {
     description: "Mamãe e Papai estão muito felizes e ansiosos! Confirme sua presença e participe do bolão.",
     images: [
       {
-        url: "/convite.jpg",
+        url: "/convite-v2.jpg",
         width: 1024,
         height: 1024,
         type: "image/jpeg",
@@ -58,7 +58,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Chá Revelação: Jade ou Benício? • 10 de Outubro às 13h30",
     description: "Mamãe e Papai estão muito felizes e ansiosos! Confirme sua presença e participe do bolão.",
-    images: ["/convite.jpg"],
+    images: ["/convite-v2.jpg"],
   },
   icons: {
     icon: "/favicon.ico",
